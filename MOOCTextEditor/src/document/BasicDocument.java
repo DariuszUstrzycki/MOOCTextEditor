@@ -45,13 +45,8 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSentences()
 	{
-	    //TODO: Implement this method.  See the Module 1 support videos 
-        // if you need help.
-		// protected List<String> getTokens(String pattern)
-		
 		String regex = "[?!.]+";
-		List<String> tokens = getTokens(regex);			
-		
+		List<String> tokens = getTokens(regex);	// protected Document method	
 		
         return tokens.size();
 	}
