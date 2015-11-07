@@ -29,9 +29,10 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumWords()
 	{
-		//TODO: Implement this method.  See the Module 1 support videos 
-	    // if you need help.
-	    return 0;
+		String regex = "[a-zA-Z]+";
+		List<String> tokens = getTokens(regex);	// protected Document method	
+		
+		return tokens.size();
 	}
 	
 	/**
@@ -45,7 +46,7 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSentences()
 	{
-		String regex = "[?!.]+";
+		String regex = "([?!.]+)";
 		List<String> tokens = getTokens(regex);	// protected Document method	
 		
         return tokens.size();
@@ -62,8 +63,8 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSyllables()
 	{
-	    //TODO: Implement this method.  See the Module 1 support videos 
-        // if you need help.
+		
+		
         return 0;
 	}
 	

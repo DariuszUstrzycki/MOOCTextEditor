@@ -67,7 +67,7 @@ public abstract class Document {
 	public static boolean testCase(Document doc, int syllables, int words, int sentences)
 	{
 		System.out.println("-----------------------------------Testing text: ");
-		System.out.print(doc.getText() + "\n....");
+		System.out.print(doc.getText() + "\n......................................");
 		boolean passed = true;
 		int syllFound = doc.getNumSyllables();
 		int wordsFound = doc.getNumWords();
