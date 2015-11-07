@@ -78,9 +78,25 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSyllables()
 	{
+		//get words
+		String regex = "[a-zA-Z]+";
+		List<String> tokens = getTokens(regex);	// protected Document method	
+		System.out.println("\n" + tokens.toString());
 		
+		//for each word count the syllables
+		int totalSyllables = 0;
 		
-        return 0;
+		for(String word : tokens){
+			
+			
+			int syllables = countSyllables(word);
+			
+			System.out.println("Word: " + word + "  " + syllables + " syllables");
+			
+			totalSyllables += syllables;
+		}
+		
+        return totalSyllables;
 	}
 	
 	
@@ -88,10 +104,11 @@ public class BasicDocument extends Document
 	 * You are encouraged to add your own tests.  */
 	public static void main(String[] args)
 	{
+		
 		testCase(new BasicDocument("This is a test.  How many???  "
 		        + "Senteeeeeeeeeences are here... there should be 5!  Right?"),
 				16, 13, 5);
-		testCase(new BasicDocument(""), 0, 0, 0);
+		/*testCase(new BasicDocument(""), 0, 0, 0);
 		testCase(new BasicDocument("sentence, with, lots, of, commas.!  "
 		        + "(And some poaren)).  The output is: 7.5."), 15, 11, 4);
 		testCase(new BasicDocument("many???  Senteeeeeeeeeences are"), 6, 3, 2);
@@ -104,7 +121,7 @@ public class BasicDocument extends Document
 		testCase(new BasicDocument("Sentences?!"), 3, 1, 1);
 		testCase(new BasicDocument("Lorem ipsum dolor sit amet, qui ex choro quodsi moderatius, nam dolores explicari forensibus ad."),
 		         32, 15, 1);
-		
+		*/
 		
 	}
 	

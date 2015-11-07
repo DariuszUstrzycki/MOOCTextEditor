@@ -53,7 +53,21 @@ public abstract class Document {
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 1) and 
 	    // EfficientDocument (module 2).
-	    return 0;
+		
+		String pattern = "[aeiouy]+" ; // zone - e is not a syllable here
+		
+		ArrayList<String> tokens = new ArrayList<String>();
+		Pattern tokSplitter = Pattern.compile(pattern);
+		Matcher m = tokSplitter.matcher(word);
+		
+		while (m.find()) {
+			tokens.add(m.group());
+		}
+		
+		//test if the last letter is not a single e
+		
+		
+	    return tokens.size();
 	}
 	
 	/** A method for testing
@@ -120,6 +134,11 @@ public abstract class Document {
 	{
 	    // TODO: Implement this method
 	    return 0.0;
+	}
+	
+	private boolean singleLetterMatch(char letter, String regex){
+		
+		return false;
 	}
 	
 	
