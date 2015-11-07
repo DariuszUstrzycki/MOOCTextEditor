@@ -53,8 +53,8 @@ public abstract class Document {
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 1) and 
 	    // EfficientDocument (module 2).
-		
-		String pattern = "[aeiouy]+" ; // zone - e is not a syllable here
+		String vowels = "aeiouyAEIOUY";
+		String pattern = "[aeiouyAEIOUY]+" ; // zone - e is not a syllable here
 		
 		ArrayList<String> tokens = new ArrayList<String>();
 		Pattern tokSplitter = Pattern.compile(pattern);
@@ -66,8 +66,34 @@ public abstract class Document {
 		
 		//test if the last letter is not a single e
 		
+		int lastIndex = word.length() -1;	
 		
-	    return tokens.size();
+		if( tokens.size() > 1 && word.charAt(lastIndex) == 'e'){
+			
+			
+			System.out.print(word + " is a word with 'e' at the end");
+			
+			String lastButOneLetter = Character.toString( word.charAt(lastIndex - 1) );
+			System.out.println(" and the lastButOneLetter: " + lastButOneLetter);
+			
+			// check if preceding letter is a vowel
+			if ( lastButOneLetter.matches(pattern)){
+				System.out.println("entering TWO VOWELS AT THE END");
+				return tokens.size();
+			}				
+			else{
+				System.out.println("entering CONSONANT plus E");
+				return tokens.size()-1;
+			}
+				
+		}
+		else{
+			return tokens.size();
+		}
+		
+		
+		
+	    
 	}
 	
 	/** A method for testing
@@ -136,10 +162,6 @@ public abstract class Document {
 	    return 0.0;
 	}
 	
-	private boolean singleLetterMatch(char letter, String regex){
-		
-		return false;
-	}
 	
 	
 	
