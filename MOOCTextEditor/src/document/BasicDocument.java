@@ -46,8 +46,23 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSentences()
 	{
+		
 		String regex = "([?!.]+)";
-		List<String> tokens = getTokens(regex);	// protected Document method	
+		List<String> tokens = getTokens(regex);	// protected Document method
+		
+		if(getText().length() != 0){
+			
+			int lastIndexOfText = getText().length() -1;			
+			
+			char lastChar = getText().charAt(lastIndexOfText);
+			
+			if (!( Character.toString(lastChar).matches(regex)))
+				return tokens.size() + 1;		
+			
+			/* ALTERNATIVE
+			 * if (!(punctuationMarks.contains(   Character.toString(lastChar)  )))
+				return tokens.size() + 1;	*/		
+		}
 		
         return tokens.size();
 	}
