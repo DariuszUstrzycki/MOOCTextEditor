@@ -1,5 +1,6 @@
 package document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** 
@@ -46,7 +47,13 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 1 support videos 
         // if you need help.
-        return 0;
+		// protected List<String> getTokens(String pattern)
+		
+		String regex = "[?!.]+";
+		List<String> tokens = getTokens(regex);			
+		
+		
+        return tokens.size();
 	}
 	
 	/**
