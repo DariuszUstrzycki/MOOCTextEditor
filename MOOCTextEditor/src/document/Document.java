@@ -90,11 +90,12 @@ public abstract class Document {
 		}
 		
 		if (passed) {
-			System.out.println("passed.\n");
+			System.out.println("PASSED.\n");
 		}
 		else {
 			System.out.println("FAILED.\n");
 		}
+		
 		return passed;
 	}
 	
