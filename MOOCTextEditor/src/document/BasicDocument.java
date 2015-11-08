@@ -81,7 +81,7 @@ public class BasicDocument extends Document
 		//get words
 		String regex = "[a-zA-Z]+";
 		List<String> tokens = getTokens(regex);	// protected Document method	
-		System.out.println("\n" + tokens.toString());
+		//System.out.println("\n" + tokens.toString());
 		
 		//for each word count the syllables
 		int totalSyllables = 0;
@@ -91,7 +91,7 @@ public class BasicDocument extends Document
 			
 			int syllables = countSyllables(word);
 			
-			System.out.println("Word: " + word + "-" + syllables + " syllables");
+			//System.out.println("Word: " + word + "-" + syllables + " syllables");
 			
 			totalSyllables += syllables;
 		}
@@ -104,12 +104,13 @@ public class BasicDocument extends Document
 	 * You are encouraged to add your own tests.  */
 	public static void main(String[] args)
 	{
+		System.out.println( new BasicDocument("I am here right now whatever happens to anybody within reach.").getFleschScore());
 		
-		
-		 testCase(new BasicDocument("cOntiguous"), 3, 1, 1);
-			testCase(new BasicDocument("sleepY"), 2, 1, 1);
-			testCase(new BasicDocument("obvious"), 2, 1, 1);
-			testCase(new BasicDocument("toga"), 2, 1, 1);
+		testCase(new BasicDocument("a"), 1, 1, 1);
+		testCase(new BasicDocument("cOntiguous"), 3, 1, 1);
+		testCase(new BasicDocument("sleepY"), 2, 1, 1);
+		testCase(new BasicDocument("obvious"), 2, 1, 1);
+		testCase(new BasicDocument("toga"), 2, 1, 1);
 		 
 		testCase(new BasicDocument("soMe"), 1, 1, 1);
 		testCase(new BasicDocument("flo"), 1, 1, 1);

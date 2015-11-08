@@ -32,11 +32,14 @@ public abstract class Document {
 	protected List<String> getTokens(String pattern)
 	{
 		ArrayList<String> tokens = new ArrayList<String>();
-		Pattern tokSplitter = Pattern.compile(pattern);
-		Matcher m = tokSplitter.matcher(text);
+		Pattern tokSplitter = Pattern.compile(pattern); // class Pattern represents a regex. If regex will be used only once
+		// you can use Pattern.matches(String regex, CharSequence input)returning a boolean whether the regex matches the input
 		
-		while (m.find()) {
-			tokens.add(m.group());
+		Matcher m = tokSplitter.matcher(text); // class Matcher contains both the regex and the text in which to search for the the regex
+		 // 
+		
+		while (m.find()) { // attempts to match a piece of the search object to the search pattern
+			tokens.add(m.group()); //returns the string from the search object that matches the search pattern
 		}
 		
 		return tokens;
@@ -53,47 +56,30 @@ public abstract class Document {
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 1) and 
 	    // EfficientDocument (module 2).
-		String vowels = "aeiouyAEIOUY";
-		String pattern = "[aeiouyAEIOUY]+" ; // zone - e is not a syllable here
+		
+		String vowelRegex = "[aeiouyAEIOUY]+" ; // zone - e is not a syllable here
 		
 		ArrayList<String> tokens = new ArrayList<String>();
-		Pattern tokSplitter = Pattern.compile(pattern);
+		Pattern tokSplitter = Pattern.compile(vowelRegex);
 		Matcher m = tokSplitter.matcher(word);
 		
 		while (m.find()) {
 			tokens.add(m.group());
 		}
 		
-		//test if the last letter is not a single e
+		// 2-syllable words and longer, with at least 2 letters, will not count	the final -e as a syllable
+		// if there's a consonant before this -e (eg "some" > 1 consonant, "Segue" > 2 consosnants
+		int lastIndex = word.length() - 1;		
 		
-		int lastIndex = word.length() -1;	
-		
-		if( tokens.size() > 1 && word.charAt(lastIndex) == 'e'){
-			
-			
-			System.out.print(word + " is a word with 'e' at the end");
+		if ( word.charAt(lastIndex) == 'e' && word.length() >= 2 && tokens.size() >= 2){
 			
 			String lastButOneLetter = Character.toString( word.charAt(lastIndex - 1) );
-			System.out.println(" and the lastButOneLetter: " + lastButOneLetter);
-			
-			// check if preceding letter is a vowel
-			if ( lastButOneLetter.matches(pattern)){
-				System.out.println("entering TWO VOWELS AT THE END");
-				return tokens.size();
-			}				
-			else{
-				System.out.println("entering CONSONANT plus E");
-				return tokens.size()-1;
-			}
-				
-		}
-		else{
-			return tokens.size();
+		
+			if( ! (lastButOneLetter.matches(vowelRegex)))
+					return tokens.size()-1;
 		}
 		
-		
-		
-	    
+		return tokens.size();
 	}
 	
 	/** A method for testing
@@ -158,8 +144,12 @@ public abstract class Document {
 	/** return the Flesch readability score of this document */
 	public double getFleschScore()
 	{
-	    // TODO: Implement this method
-	    return 0.0;
+		System.out.println(getNumSentences());
+		System.out.println(getNumWords());
+		System.out.println(getNumSyllables());
+		
+		   
+	    return 206.835 - (1.015*((double)getNumWords()/ (double) getNumSentences())) - (84.6*((double)getNumSyllables()/(double) getNumWords())) ;
 	}
 	
 	
