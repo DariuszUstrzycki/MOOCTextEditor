@@ -32,11 +32,14 @@ public abstract class Document {
 	protected List<String> getTokens(String pattern)
 	{
 		ArrayList<String> tokens = new ArrayList<String>();
-		Pattern tokSplitter = Pattern.compile(pattern);
-		Matcher m = tokSplitter.matcher(text);
+		Pattern tokSplitter = Pattern.compile(pattern); // class Pattern represents a regex. If regex will be used only once
+		// you can use Pattern.matches(String regex, CharSequence input)returning a boolean whether the regex matches the input
 		
-		while (m.find()) {
-			tokens.add(m.group());
+		Matcher m = tokSplitter.matcher(text); // class Matcher contains both the regex and the text in which to search for the the regex
+		 // 
+		
+		while (m.find()) { // attempts to match a piece of the search object to the search pattern
+			tokens.add(m.group()); //returns the string from the search object that matches the search pattern
 		}
 		
 		return tokens;
@@ -45,34 +48,38 @@ public abstract class Document {
 	// This is a helper function that returns the number of syllables
 	// in a word.  You should write this and use it in your 
 	// BasicDocument class.
-	protected static int countSyllables(String word)
+	// You will probably NOT need to add a countWords or a countSentences method
+	// here.  The reason we put countSyllables here because we'll use it again
+	// next week when we implement the EfficientDocument class.
+	protected int countSyllables(String word)
 	{
-	    //System.out.print("Counting syllables in " + word + "...");
-		int numSyllables = 0;
-		boolean newSyllable = true;
-		String vowels = "aeiouy";
-		char[] cArray = word.toCharArray();
-		for (int i = 0; i < cArray.length; i++)
-		{
-		    if (i == cArray.length-1 && Character.toLowerCase(cArray[i]) == 'e' 
-		    		&& newSyllable && numSyllables > 0) 
-		    {
-		    	//System.out.println("1. cArray[i]: " + cArray[i]);
-                numSyllables--;
-            }
-		    
-		    if (newSyllable && vowels.indexOf(Character.toLowerCase(cArray[i])) >= 0) {
-				newSyllable = false;
-				numSyllables++;
-				//System.out.println("2. cArray[i]: " + cArray[i]);
-			}
-			else if (vowels.indexOf(Character.toLowerCase(cArray[i])) < 0) {
-				newSyllable = true;
-				//System.out.println("3. cArray[i]: " + cArray[i]);
-			}
+		// TODO: Implement this method so that you can call it from the 
+	    // getNumSyllables method in BasicDocument (module 1) and 
+	    // EfficientDocument (module 2).
+		
+		String vowelRegex = "[aeiouyAEIOUY]+" ; // zone >> - e is not a syllable here
+		
+		ArrayList<String> tokens = new ArrayList<String>();
+		Pattern tokSplitter = Pattern.compile(vowelRegex);
+		Matcher m = tokSplitter.matcher(word);
+		
+		while (m.find()) {
+			tokens.add(m.group());
 		}
-		//System.out.println( "found " + numSyllables);
-		return numSyllables;
+		
+		// 2-syllable words and longer, with at least 2 letters, will not count	the final -e as a syllable
+		// if there's a consonant before this -e (eg "some" > 1 consonant, "Segue" > 2 consonants
+		int lastIndex = word.length() - 1;		
+		
+		if ( word.charAt(lastIndex) == 'e' && word.length() >= 2 && tokens.size() >= 2){
+			
+			String lastButOneLetter = Character.toString( word.charAt(lastIndex - 1) );
+		
+			if( ! (lastButOneLetter.matches(vowelRegex)))
+					return tokens.size()-1;
+		}
+		
+		return tokens.size();
 	}
 	
 	/** A method for testing
@@ -85,12 +92,13 @@ public abstract class Document {
 	 */
 	public static boolean testCase(Document doc, int syllables, int words, int sentences)
 	{
-		System.out.println("Testing text: ");
-		System.out.print(doc.getText() + "\n....");
+		System.out.println("-----------------------------------Testing text: ");
+		System.out.print(doc.getText() + "\n......................................");
 		boolean passed = true;
 		int syllFound = doc.getNumSyllables();
 		int wordsFound = doc.getNumWords();
 		int sentFound = doc.getNumSentences();
+		
 		if (syllFound != syllables) {
 			System.out.println("\nIncorrect number of syllables.  Found " + syllFound 
 					+ ", expected " + syllables);
@@ -108,11 +116,12 @@ public abstract class Document {
 		}
 		
 		if (passed) {
-			System.out.println("passed.\n");
+			System.out.println("PASSED.\n");
 		}
 		else {
 			System.out.println("FAILED.\n");
 		}
+		
 		return passed;
 	}
 	
@@ -135,11 +144,14 @@ public abstract class Document {
 	/** return the Flesch readability score of this document */
 	public double getFleschScore()
 	{
-		double wordCount = (double)getNumWords();
-		return 206.835 - (1.015 * ((wordCount)/getNumSentences())) 
-				- (84.6 * (((double)getNumSyllables())/wordCount));
-	
+		System.out.println(getNumSentences());
+		System.out.println(getNumWords());
+		System.out.println(getNumSyllables());
+		
+		   
+	    return 206.835 - (1.015*((double)getNumWords()/ (double) getNumSentences())) - (84.6*((double)getNumSyllables()/(double) getNumWords())) ;
 	}
+	
 	
 	
 	
