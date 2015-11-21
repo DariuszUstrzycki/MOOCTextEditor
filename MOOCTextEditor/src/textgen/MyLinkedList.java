@@ -15,9 +15,12 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	int size;
 
 	/** Create a new empty LinkedList */
-	public MyLinkedList() {
+public MyLinkedList() {
 		
-		
+		head = new LLNode<E>();
+		tail = new LLNode<E>();
+		head.next = tail;
+		tail.prev = head;
 	}
 
 	/**
@@ -98,5 +101,10 @@ class LLNode<E>
 		this.next = null;
 	}
 	
+	//my constructor
+		public LLNode() 
+		{
+			this(null);
+		}
 
 }
