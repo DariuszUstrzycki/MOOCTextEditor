@@ -48,7 +48,7 @@ public class EfficientDocument extends Document {
 		 
 			if (isWord(token)) {				
 				numWords++;
-				numSyllables += Document.countSyllables(token);
+				numSyllables += countSyllables(token);
 			}
 			else {
 				numSentences++;

@@ -45,7 +45,7 @@ public abstract class Document {
 	// This is a helper function that returns the number of syllables
 	// in a word.  You should write this and use it in your 
 	// BasicDocument class.
-	protected static int countSyllables(String word)
+	protected int countSyllables(String word)
 	{
 	    //System.out.print("Counting syllables in " + word + "...");
 		int numSyllables = 0;
