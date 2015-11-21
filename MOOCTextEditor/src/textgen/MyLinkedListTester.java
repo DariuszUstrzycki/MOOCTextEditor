@@ -32,12 +32,16 @@ public class MyLinkedListTester {
 	    shortList = new MyLinkedList<String>();
 		shortList.add("A");
 		shortList.add("B");
+		
 		emptyList = new MyLinkedList<Integer>();
+		
 		longerList = new MyLinkedList<Integer>();
+		
 		for (int i = 0; i < LONG_LIST_LENGTH; i++)
 		{
 			longerList.add(i);
 		}
+		
 		list1 = new MyLinkedList<Integer>();
 		list1.add(65);
 		list1.add(21);
@@ -53,16 +57,14 @@ public class MyLinkedListTester {
 	@Test
 	public void testGet()
 	{
-		//test empty list, get should throw an exception
+		////////////////test empty list, get should throw an exception
 		try {
 			emptyList.get(0);
 			fail("Check out of bounds");
 		}
-		catch (IndexOutOfBoundsException e) {
-			
-		}
+		catch (IndexOutOfBoundsException e) {}
 		
-		// test short list, first contents, then out of bounds
+		//////////////// test short list, first contents, then out of bounds
 		assertEquals("Check first", "A", shortList.get(0));
 		assertEquals("Check second", "B", shortList.get(1));
 		
@@ -70,19 +72,17 @@ public class MyLinkedListTester {
 			shortList.get(-1);
 			fail("Check out of bounds");
 		}
-		catch (IndexOutOfBoundsException e) {
+		catch (IndexOutOfBoundsException e) {}
 		
-		}
 		try {
 			shortList.get(2);
 			fail("Check out of bounds");
 		}
-		catch (IndexOutOfBoundsException e) {
+		catch (IndexOutOfBoundsException e) {}
 		
-		}
-		// test longer list contents
+		//////////////// test longer list contents
 		for(int i = 0; i<LONG_LIST_LENGTH; i++ ) {
-			assertEquals("Check "+i+ " element", (Integer)i, longerList.get(i));
+			assertEquals("Check " + i + " element", (Integer)i, longerList.get(i));
 		}
 		
 		// test off the end of the longer array
@@ -90,15 +90,13 @@ public class MyLinkedListTester {
 			longerList.get(-1);
 			fail("Check out of bounds");
 		}
-		catch (IndexOutOfBoundsException e) {
+		catch (IndexOutOfBoundsException e) {}
 		
-		}
 		try {
 			longerList.get(LONG_LIST_LENGTH);
 			fail("Check out of bounds");
 		}
-		catch (IndexOutOfBoundsException e) {
-		}
+		catch (IndexOutOfBoundsException e) {}
 		
 	}
 	
