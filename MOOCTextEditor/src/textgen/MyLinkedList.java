@@ -35,10 +35,38 @@ public MyLinkedList() {
 
 	/** Get the element at position index 
 	 * @throws IndexOutOfBoundsException if the index is out of bounds. */
-	public E get(int index) 
+	public E get(int index) throws IndexOutOfBoundsException
 	{
-		// TODO: Implement this method.
-		return null;
+		LLNode<E> currentNode = head;
+		
+		try {
+			
+			if (index < 0 )
+				new IndexOutOfBoundsException("Index cannot be smaller than zero");
+			
+			LLNode<E> temp = null;
+			int curCounter = -1; 
+			
+			while ( curCounter <= index ){
+				
+				if (currentNode.next == null){
+					new IndexOutOfBoundsException("Index cannot be smaller than zero");
+				}
+				else {
+					
+					temp = currentNode.next;
+					currentNode = temp;
+					curCounter++;					
+				}		
+			}
+			
+			
+		} catch (IndexOutOfBoundsException e) {
+			// TODO: handle exception
+		}
+
+		
+		return  currentNode == null ? null : currentNode.data ;
 	}
 
 	/**
