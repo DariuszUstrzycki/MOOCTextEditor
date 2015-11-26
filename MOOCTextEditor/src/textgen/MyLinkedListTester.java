@@ -22,6 +22,7 @@ public class MyLinkedListTester {
 	MyLinkedList<Integer> emptyList;
 	MyLinkedList<Integer> longerList;
 	MyLinkedList<Integer> list1;
+	MyLinkedList<Integer> sentinelsOnlyList;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -47,6 +48,8 @@ public class MyLinkedListTester {
 		list1.add(21);
 		list1.add(42);
 		
+		sentinelsOnlyList = new MyLinkedList<Integer>();
+		
 	}
 
 	
@@ -64,7 +67,7 @@ public class MyLinkedListTester {
 		}
 		catch (IndexOutOfBoundsException e) {}
 		
-		//////////////// test short list, first contents, then out of bounds
+		//////////////// test short list: first contents, then out of bounds
 		assertEquals("Check first", "A", shortList.get(0));
 		assertEquals("Check second", "B", shortList.get(1));
 		
@@ -156,5 +159,17 @@ public class MyLinkedListTester {
 	
 	
 	// TODO: Optionally add more test methods.
+	
+	/** Test initializing a list with a no-argument constructor
+	 * and 2 sentinel values */
+	@Test
+	public void testNoArgConstructor()
+	{
+		assertNotEquals ("Check head is not null ", null, sentinelsOnlyList.head);
+		assertNotEquals ("Check head is not null ", null, sentinelsOnlyList.tail);
+		assertEquals("Check head's next ref points to tail ", sentinelsOnlyList.tail , sentinelsOnlyList.head.next);
+		assertEquals("Check tail's prev ref points to head ", sentinelsOnlyList.head , sentinelsOnlyList.tail.prev);
+	    
+	}
 	
 }
