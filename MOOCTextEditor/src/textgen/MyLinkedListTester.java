@@ -22,7 +22,6 @@ public class MyLinkedListTester {
 	MyLinkedList<Integer> emptyList;
 	MyLinkedList<Integer> longerList;
 	MyLinkedList<Integer> list1;
-	MyLinkedList<Integer> sentinelsOnlyList;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -47,9 +46,6 @@ public class MyLinkedListTester {
 		list1.add(65);
 		list1.add(21);
 		list1.add(42);
-		
-		sentinelsOnlyList = new MyLinkedList<Integer>();
-		
 	}
 
 	
@@ -124,16 +120,49 @@ public class MyLinkedListTester {
 	@Test
 	public void testAddEnd()
 	{
-        // TODO: implement this test
+        
+		////////////////test empty list, check contents after adding two elements
+		emptyList.add(5);
+		emptyList.add(33);
+		assertEquals("Check first", (Integer)5, emptyList.get(0));
+		assertEquals("Check second", (Integer)33, emptyList.get(1));
 		
-	}
+		////////////////test non-empty list, check contents after adding two elements
+		////////////////also check two original elements in the list after adding
+		shortList.add("C");
+		shortList.add("D");
+		assertEquals("Check first", "A", shortList.get(0));
+		assertEquals("Check second", "B", shortList.get(1));
+		assertEquals("Check third", "C", shortList.get(2));
+		assertEquals("Check fourth", "D", shortList.get(3));
+		
+		////////////////on two lists check out of bounds after adding
+		try {
+		emptyList.get(-1);
+		fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+
+		try {
+		shortList.get(4);
+		fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+		
+		////////////////
+		
+	}	
 
 	
 	/** Test the size of the list */
 	@Test
 	public void testSize()
 	{
-		// TODO: implement this test
+		////////////////test the size of all the lists from setUp
+		assertEquals("Check shortList", 2, shortList.size());
+		assertEquals("Check emptyList", 0, emptyList.size());
+		assertEquals("Check longerList", LONG_LIST_LENGTH, longerList.size());
+		assertEquals("Check list1", 3, list1.size());
 	}
 
 	
@@ -144,9 +173,59 @@ public class MyLinkedListTester {
 	 * */
 	@Test
 	public void testAddAtIndex()
-	{
-        // TODO: implement this test
+	{		
+		////////////////test empty list, check adding at invalid index
+		try {
+		emptyList.add(-1, 50);
+		fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
 		
+		try {
+			emptyList.add(1, 50);
+			fail("Check out of bounds");
+			}
+			catch (IndexOutOfBoundsException e) {}
+		
+		////////////////test longerList, check adding at invalid index
+		try	{
+			longerList.add(-1, 50);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+			
+		try {
+			longerList.add(LONG_LIST_LENGTH + 1, 50);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+		
+		
+		////////////////test longerList, check adding at the size index
+		longerList.add(longerList.size(), 300);	
+		assertEquals("Check first", (Integer)300, longerList.get(longerList.size()-1));	
+		
+		
+		////////////////test empty list, check contents after adding two elements
+		emptyList.add(0, 50);
+		emptyList.add(1, 100);
+		assertEquals("Check first", (Integer)50, emptyList.get(0));
+		assertEquals("Check second", (Integer)100, emptyList.get(1));
+		
+		////////////////test empty list, check if elements move up after insertion
+		emptyList.add(1, 5000);
+		assertEquals("Check first", (Integer)50, emptyList.get(0));
+		assertEquals("Check second", (Integer)5000, emptyList.get(1));
+		assertEquals("Check third", (Integer)100, emptyList.get(2));
+		
+		
+		////////////////test short list, check if elements move up after insertion
+		shortList.add(0, "C");
+		shortList.add(0, "D");
+		assertEquals("Check first", "D", shortList.get(0));
+		assertEquals("Check second", "C", shortList.get(1));
+		assertEquals("Check third", "A", shortList.get(2));
+		assertEquals("Check fourth", "B", shortList.get(3));
 	}
 	
 	/** Test setting an element in the list */
@@ -165,10 +244,10 @@ public class MyLinkedListTester {
 	@Test
 	public void testNoArgConstructor()
 	{
-		assertNotEquals ("Check head is not null ", null, sentinelsOnlyList.head);
-		assertNotEquals ("Check head is not null ", null, sentinelsOnlyList.tail);
-		assertEquals("Check head's next ref points to tail ", sentinelsOnlyList.tail , sentinelsOnlyList.head.next);
-		assertEquals("Check tail's prev ref points to head ", sentinelsOnlyList.head , sentinelsOnlyList.tail.prev);
+		assertNotEquals ("Check head is not null ", null, emptyList.head);
+		assertNotEquals ("Check head is not null ", null, emptyList.tail);
+		assertEquals("Check head's next ref points to tail ", emptyList.tail , emptyList.head.next);
+		assertEquals("Check tail's prev ref points to head ", emptyList.head , emptyList.tail.prev);
 	    
 	}
 	
