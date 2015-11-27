@@ -79,10 +79,12 @@ public MyLinkedList() {
 			
 		
 		LLNode<E> currentNode = nodeAt(index);
-		//LLNode<E> newNode = new LLNode (elementcurrentNode.prev, currentNode.next); 
-		
+		 
+		//LLNode<E> newNode = new LLNode (element, currentNode.prev, currentNode);
 		//do the insertion on currentNode
 		LLNode<E> prevNode = currentNode.prev;
+		
+		
 		LLNode<E> elementsNode = new LLNode<E>(element);
 		
 		prevNode.next = elementsNode;
@@ -176,12 +178,28 @@ class LLNode<E>
 	//my constructor
 	public LLNode(E element, LLNode previousNode, LLNode nextNode) 
 	{
-		this(element);
+		this.data = element;
+		
+		
+		
 		previousNode.next = this;
 		this.prev = previousNode;		
 		
 		this.next = nextNode;
 		nextNode.prev = this;
+		
+		/////////////////////
+		/*LLNode<E> elementsNode = new LLNode<E>(element);
+		
+		LLNode<E> prevNode = currentNode.prev;
+		
+		
+		prevNode.next = elementsNode;
+		elementsNode.prev = prevNode;
+		
+		elementsNode.next = currentNode;
+		currentNode.prev = elementsNode;*/
+		
 		
 	}
 		
