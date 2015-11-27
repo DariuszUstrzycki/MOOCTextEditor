@@ -52,18 +52,7 @@ public MyLinkedList() {
 		if (index >= size() )
 			throw new IndexOutOfBoundsException("Index must be smaller than the size of the list");	
 			
-		LLNode<E> currentNode = head.next;	
-		int counter = 0; 
-		
-		while (counter < index){ 
-			
-			LLNode<E> temp = null;
-			temp = currentNode.next;
-			currentNode = temp;
-			counter++;			
-		}
-		
-		return currentNode.data ;
+		return nodeAt(index).data ;
 	}
 	
 	public boolean isEmpty(){
@@ -88,17 +77,9 @@ public MyLinkedList() {
 		if (index  > size() )
 			throw new IndexOutOfBoundsException("Index must be smaller than the size of the list");
 			
-		LLNode<E> currentNode = head.next;	
-		int counter = 0; 
 		
-		//the loops 'walks' to the node specified by the index
-		while (counter < index){ 
-			
-			LLNode<E> temp = null;
-			temp = currentNode.next;
-			currentNode = temp;
-			counter++;			
-		}
+		LLNode<E> currentNode = nodeAt(index);
+		//LLNode<E> newNode = new LLNode (elementcurrentNode.prev, currentNode.next); 
 		
 		//do the insertion on currentNode
 		LLNode<E> prevNode = currentNode.prev;
@@ -109,6 +90,8 @@ public MyLinkedList() {
 		
 		elementsNode.next = currentNode;
 		currentNode.prev = elementsNode;
+		
+		
 		
 		// return true if  Returns true if this collection changed as a result of the call. (Returns false 
 		//if this collection does not permit duplicates and already contains the specified element.)
@@ -152,6 +135,23 @@ public MyLinkedList() {
 		// TODO: Implement this method
 		return null;
 	}   
+	
+	private LLNode<E> nodeAt(int index){
+
+		LLNode<E> currentNode = head.next;	
+		int counter = 0; 
+		
+		while (counter < index){ 
+			
+			LLNode<E> temp = null;
+			temp = currentNode.next;
+			currentNode = temp;
+			counter++;			
+		}
+
+		return currentNode;
+}
+
 }
 
 class LLNode<E> 
@@ -160,9 +160,9 @@ class LLNode<E>
 	LLNode<E> next;
 	E data;
 	
-	public LLNode(E e) 
+	public LLNode(E element) 
 	{
-		this.data = e;
+		this.data = element;
 		this.prev = null;
 		this.next = null;
 	}
@@ -172,6 +172,19 @@ class LLNode<E>
 	{
 		this(null);
 	}
+	
+	//my constructor
+	public LLNode(E element, LLNode previousNode, LLNode nextNode) 
+	{
+		this(element);
+		previousNode.next = this;
+		this.prev = previousNode;		
+		
+		this.next = nextNode;
+		nextNode.prev = this;
+		
+	}
+		
 	
 	public E getData(){
 		return data;
