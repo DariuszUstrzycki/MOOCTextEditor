@@ -32,21 +32,10 @@ public MyLinkedList() {
 	{
 		
 		add(size(), element );
-		/*// TODO: Implement this method
-		
-		LLNode <E> elementsNode = new LLNode<E>(element);
-		LLNode <E> lastButOne = tail.prev;
-		
-		elementsNode.next = tail;
-		tail.prev = elementsNode;
-		
-		lastButOne.next = elementsNode;
-		elementsNode.prev = lastButOne;
 		
 		// return true if  Returns true if this collection changed as a result of the call. (Returns false 
 		//if this collection does not permit duplicates and already contains the specified element.)
-		size++;*/
-		
+				
 		return true;
 	}
 
@@ -182,9 +171,34 @@ class LLNode<E>
 	}
 	
 	//my constructor
-		public LLNode() 
-		{
-			this(null);
-		}
+	public LLNode() 
+	{
+		this(null);
+	}
+	
+	public E getData(){
+		return data;
+	}
+	
+	public void setData(E e){
+		this.data = e;
+	}
 
+	public LLNode<E> getPrev() {
+		return prev;
+	}
+
+	public void setPrev(LLNode<E> prev) {
+		this.prev = prev;
+	}
+
+	public LLNode<E> getNext() {
+		return next;
+	}
+
+	public void setNext(LLNode<E> next) {
+		this.next = next;
+	}
+		
+	
 }
