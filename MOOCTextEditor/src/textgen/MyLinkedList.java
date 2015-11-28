@@ -75,28 +75,12 @@ public MyLinkedList() {
 			throw new IndexOutOfBoundsException("Index cannot be smaller than zero");	
 		
 		if (index  > size() )
-			throw new IndexOutOfBoundsException("Index must be smaller than the size of the list");
-			
+			throw new IndexOutOfBoundsException("Index can't be greater than the size of the list");
 		
-		LLNode<E> currentNode = nodeAt(index);
-		 
-		//LLNode<E> newNode = new LLNode (element, currentNode.prev, currentNode);
-		//do the insertion on currentNode
-		LLNode<E> prevNode = currentNode.prev;
+		LLNode<E> nextNode = nodeAt(index);		
+		// create a new node inserted between prevNode and nextNode
+		new LLNode<E> (element, nextNode.prev, nextNode);
 		
-		
-		LLNode<E> elementsNode = new LLNode<E>(element);
-		
-		prevNode.next = elementsNode;
-		elementsNode.prev = prevNode;
-		
-		elementsNode.next = currentNode;
-		currentNode.prev = elementsNode;
-		
-		
-		
-		// return true if  Returns true if this collection changed as a result of the call. (Returns false 
-		//if this collection does not permit duplicates and already contains the specified element.)
 		size++;
 	}
 
@@ -176,31 +160,15 @@ class LLNode<E>
 	}
 	
 	//my constructor
-	public LLNode(E element, LLNode previousNode, LLNode nextNode) 
+	public LLNode(E element, LLNode<E> previousNode, LLNode<E> nextNode) 
 	{
 		this.data = element;
-		
-		
 		
 		previousNode.next = this;
 		this.prev = previousNode;		
 		
 		this.next = nextNode;
 		nextNode.prev = this;
-		
-		/////////////////////
-		/*LLNode<E> elementsNode = new LLNode<E>(element);
-		
-		LLNode<E> prevNode = currentNode.prev;
-		
-		
-		prevNode.next = elementsNode;
-		elementsNode.prev = prevNode;
-		
-		elementsNode.next = currentNode;
-		currentNode.prev = elementsNode;*/
-		
-		
 	}
 		
 	
