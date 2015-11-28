@@ -6,6 +6,7 @@ import java.util.AbstractList;
 /** A class that implements a doubly linked list
  * 
  * @author UC San Diego Intermediate Programming MOOC team
+ * @author Dariusz Ustrzycki - the implementation of all the methods
  *
  * @param <E> The type of the elements stored in the list
  */
@@ -14,8 +15,8 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	LLNode<E> tail;
 	int size;
 
-	/** Create a new empty LinkedList */
-public MyLinkedList() {
+/** Creates a new empty LinkedList */
+	public MyLinkedList() {
 		
 		head = new LLNode<E>();
 		tail = new LLNode<E>();
@@ -30,7 +31,6 @@ public MyLinkedList() {
 	 */
 	public boolean add(E element ) 
 	{
-		
 		add(size(), element );
 		
 		// return true if  Returns true if this collection changed as a result of the call. (Returns false 
@@ -44,23 +44,20 @@ public MyLinkedList() {
 	public E get(int index) throws IndexOutOfBoundsException
 	{
 		if (index < 0 )
-			throw new IndexOutOfBoundsException("Index cannot be smaller than zero");	
+			throw new IndexOutOfBoundsException("Index less than zero");	
 		
 		if (isEmpty())
 			throw new IndexOutOfBoundsException("The list is empty");
 		
 		if (index >= size() )
-			throw new IndexOutOfBoundsException("Index must be smaller than the size of the list");	
+			throw new IndexOutOfBoundsException("Index equal to or larger than the size of the list");	
 			
 		return nodeAt(index).data ;
 	}
 	
 	public boolean isEmpty(){
 		
-		if (head.next == tail && tail.prev == head)
-			return true;
-		else
-			return false;
+		return (head.next == tail && tail.prev == head) ? true : false;
 	}
 
 	/**
@@ -70,12 +67,11 @@ public MyLinkedList() {
 	 */
 	public void add(int index, E element ) 
 	{
-		
 		if (index < 0 )
-			throw new IndexOutOfBoundsException("Index cannot be smaller than zero");	
+			throw new IndexOutOfBoundsException("Index less than zero");	
 		
-		if (index  > size() )
-			throw new IndexOutOfBoundsException("Index can't be greater than the size of the list");
+		if (index > size() )
+			throw new IndexOutOfBoundsException("Index greater than the size of the list");
 		
 		LLNode<E> nextNode = nodeAt(index);		
 		// create a new node inserted between prevNode and nextNode
@@ -85,13 +81,11 @@ public MyLinkedList() {
 	}
 
 
-	/** Return the size of the list 
-	 *  @returnthe number of elements in this collection
-	 *  */
-	/* Returns the number of elements in this collection. 
-	 * If this collection contains more than Integer.MAX_VALUE elements, returns Integer.MAX_VALUE.
-	 * @Override
+	/** Returns the size of the list 
+	 *  @return the number of elements in this list
+	 * If this list contains more than Integer.MAX_VALUE elements, returns Integer.MAX_VALUE.
 	 */
+	@Override
 	public int size() 
 	{
 		return Math.min(size, Integer.MAX_VALUE);             //-1;
@@ -103,6 +97,7 @@ public MyLinkedList() {
 	 * @throws IndexOutOfBoundsException If index is outside the bounds of the list
 	 * 
 	 */
+	@Override
 	public E remove(int index) 
 	{
 		// TODO: Implement this method
@@ -121,7 +116,12 @@ public MyLinkedList() {
 		// TODO: Implement this method
 		return null;
 	}   
-	
+	/**
+	 * Returns the node at the given index. If the list has only the sentinel values
+	 * (list is empty), the method returns the tail node.
+	 * @param index the index of the node to return
+	 * @return the node at the specified index or the tail node if the list is empty
+	 */
 	private LLNode<E> nodeAt(int index){
 
 		LLNode<E> currentNode = head.next;	
@@ -136,7 +136,7 @@ public MyLinkedList() {
 		}
 
 		return currentNode;
-}
+	}
 
 }
 
@@ -153,13 +153,18 @@ class LLNode<E>
 		this.next = null;
 	}
 	
-	//my constructor
+	
 	public LLNode() 
 	{
 		this(null);
 	}
 	
-	//my constructor
+	/**
+	 * Creates a new node which is inserted between the nextNode and the previousNode
+	 * @param element the data of the node
+	 * @param previousNode the node before the newly created node
+	 * @param nextNode the node after the newly created node
+	 */	
 	public LLNode(E element, LLNode<E> previousNode, LLNode<E> nextNode) 
 	{
 		this.data = element;
