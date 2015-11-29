@@ -101,7 +101,22 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public E remove(int index) 
 	{
 		// TODO: Implement this method
-		return null;
+		if (index < 0 )
+			throw new IndexOutOfBoundsException("Index less than zero");	
+		
+		if (index >= size() )
+			throw new IndexOutOfBoundsException("Index greater than or equal to the size of the list");
+		
+		LLNode<E> nodeToRemove = nodeAt(index);	
+		///////////// remove the node
+		LLNode<E> prevNode = nodeToRemove.prev;
+		LLNode<E> nextNode = nodeToRemove.next;
+		prevNode.next = nextNode;
+		nextNode.prev = prevNode;
+		
+		size--;		
+		
+		return nodeToRemove.getData();
 	}
 
 	/**

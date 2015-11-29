@@ -111,7 +111,38 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
 		assertEquals("Remove: check size is correct ", 2, list1.size());
 		
-		// TODO: Add more tests here
+		//check removing last element
+		String b = shortList.remove(1);
+		assertEquals("Remove: check a is correct ", "B", b);
+		assertEquals("Remove: check element 0 is correct ", "A", shortList.get(0));
+		assertEquals("Remove: check size is correct ", 1, shortList.size());
+		////////////////test list1, should throw an exception
+		try {
+			list1.remove(-1);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+		
+		try {
+			list1.remove(3);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+		
+		////////////////test empty list, should throw an exception
+		
+		try {
+			emptyList.remove(-1);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+		
+		try {
+			emptyList.remove(0);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+		
 	}
 	
 	/** Test adding an element into the end of the list, specifically
@@ -126,6 +157,7 @@ public class MyLinkedListTester {
 		emptyList.add(33);
 		assertEquals("Check first", (Integer)5, emptyList.get(0));
 		assertEquals("Check second", (Integer)33, emptyList.get(1));
+		assertEquals("Check size is correct ", 2, emptyList.size());
 		
 		////////////////test non-empty list, check contents after adding two elements
 		////////////////also check two original elements in the list after adding
@@ -135,6 +167,7 @@ public class MyLinkedListTester {
 		assertEquals("Check second", "B", shortList.get(1));
 		assertEquals("Check third", "C", shortList.get(2));
 		assertEquals("Check fourth", "D", shortList.get(3));
+		assertEquals("Check size is correct ", 4, shortList.size());
 		
 		////////////////on two lists check out of bounds after adding
 		try {
@@ -217,6 +250,7 @@ public class MyLinkedListTester {
 		assertEquals("Check first", (Integer)50, emptyList.get(0));
 		assertEquals("Check second", (Integer)5000, emptyList.get(1));
 		assertEquals("Check third", (Integer)100, emptyList.get(2));
+		assertEquals("Check size is correct ", 3, emptyList.size());
 		
 		
 		////////////////test short list, check if elements move up after insertion
