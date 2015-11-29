@@ -100,7 +100,6 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	@Override
 	public E remove(int index) 
 	{
-		// TODO: Implement this method
 		if (index < 0 )
 			throw new IndexOutOfBoundsException("Index less than zero");	
 		
@@ -128,8 +127,21 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public E set(int index, E element) 
 	{
-		// TODO: Implement this method
-		return null;
+	
+		if (index < 0 )
+			throw new IndexOutOfBoundsException("Index less than zero");	
+		
+		if (index >= size() )
+			throw new IndexOutOfBoundsException("Index greater than or equal to the size of the list");
+		
+		if (element == null)
+			throw new NullPointerException("The element to set can't be null!");
+		
+		LLNode<E> theNode = nodeAt(index);	
+		E oldData = theNode.getData();
+		theNode.setData(element);
+		
+		return oldData;
 	}   
 	/**
 	 * Returns the node at the given index. If the list has only the sentinel values

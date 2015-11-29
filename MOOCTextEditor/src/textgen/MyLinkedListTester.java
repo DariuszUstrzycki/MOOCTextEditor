@@ -266,8 +266,60 @@ public class MyLinkedListTester {
 	@Test
 	public void testSet()
 	{
-	    // TODO: implement this test
 	    
+		///////////// set 0th element
+		String returnedValue = shortList.set(0, "Z");
+		assertEquals("Check Oth element is set", "Z", shortList.get(0));
+		assertEquals("Check returned element", "A", returnedValue);
+		
+		///////////// set last element
+		int intVal = longerList.set(LONG_LIST_LENGTH - 1, 1000);
+		assertEquals("Check size-1 element is set", (Integer)1000, longerList.get(LONG_LIST_LENGTH - 1));
+		assertEquals("Check returned element", 9, intVal);
+		
+		///////////// set a middle element
+		int intVal2 =  list1.set(1, 2000);
+		assertEquals("Check a middle element is set", (Integer)2000, list1.get(1));
+		assertEquals("Check returned element", 21, intVal2);
+		
+		////////////check setting at invalid index///////////
+		try {
+			emptyList.set(-1, 50);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+		
+		try {
+			emptyList.set(0, 50);
+			fail("Check out of bounds");
+		}
+			catch (IndexOutOfBoundsException e) {}
+		
+		////////////////test longerList, check adding at invalid index
+		try	{
+			longerList.set(-1, 50);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+			
+		try {
+			longerList.set(LONG_LIST_LENGTH, 50);
+			fail("Check out of bounds");
+		}
+		catch (IndexOutOfBoundsException e) {}
+		
+		////////////check setting a null element///////////
+		try	{
+			shortList.set(0, null);
+			fail("Check setting a null element");
+		}
+		catch (NullPointerException e) {}
+			
+		try {
+			longerList.set(LONG_LIST_LENGTH - 1, null);
+			fail("Check setting a null element");
+		}
+		catch (NullPointerException e) {}
 	}
 	
 	
