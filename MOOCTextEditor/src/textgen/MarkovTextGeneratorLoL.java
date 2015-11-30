@@ -14,6 +14,7 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	// The list of words with their next words
 	private List<ListNode> wordList; 
 	
+	
 	// The starting "word"
 	private String starter;
 	
