@@ -182,9 +182,22 @@ public class MyLinkedListTester {
 		}
 		catch (IndexOutOfBoundsException e) {}
 		
-		////////////////
+		////////////////////////////check adding a null element///////////
+		try	{
+			shortList.add(null);
+			fail("Check setting a null element");
+		}
+		catch (NullPointerException e) {}
+		
+		try {
+			longerList.add(null);
+			fail("Check setting a null element");
+		}
+		catch (NullPointerException e) {}
 		
 	}	
+
+	
 
 	
 	/** Test the size of the list */
@@ -260,6 +273,21 @@ public class MyLinkedListTester {
 		assertEquals("Check second", "C", shortList.get(1));
 		assertEquals("Check third", "A", shortList.get(2));
 		assertEquals("Check fourth", "B", shortList.get(3));
+		
+		////////////////////////////check adding a null element///////////
+		try	{
+			shortList.add(0, null);
+			fail("Check setting a null element");
+		}
+		catch (NullPointerException e) {}
+		
+		try {
+			longerList.add(LONG_LIST_LENGTH - 1, null);
+			fail("Check setting a null element");
+		}
+		catch (NullPointerException e) {}
+		
+		
 	}
 	
 	/** Test setting an element in the list */

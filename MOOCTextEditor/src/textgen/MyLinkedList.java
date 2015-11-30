@@ -73,6 +73,9 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		if (index > size() )
 			throw new IndexOutOfBoundsException("Index greater than the size of the list");
 		
+		if (element == null)
+			throw new NullPointerException("The element to set can't be null!");
+		
 		LLNode<E> nextNode = nodeAt(index);		
 		// create a new node inserted between prevNode and nextNode
 		new LLNode<E> (element, nextNode.prev, nextNode);
