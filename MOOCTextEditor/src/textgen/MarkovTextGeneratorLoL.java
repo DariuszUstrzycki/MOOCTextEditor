@@ -70,8 +70,8 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 				preWordNode = checkedNode;
 			}
 		}//end while
-		
-		preWordNode.addNextWord(starterNode.getFirstNextWord());
+		starter = starterNode.getNextWordAt(0);
+		preWordNode.addNextWord(starter);
 	}
 	
 	
@@ -145,13 +145,13 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 		/////////////my testing///////////////
 		
 		
-		/*// feed the generator a fixed random value for repeatable behavior
+		// feed the generator a fixed random value for repeatable behavior
 		MarkovTextGeneratorLoL gen = new MarkovTextGeneratorLoL(new Random(42));
 		String textString = "Hello.  Hello there.  This is a test.  Hello there.  Hello Bob.  Test again.";
 		System.out.println(textString);
 		gen.train(textString);
 		System.out.println(gen);
-		System.out.println(gen.generateText(20));
+		/*System.out.println(gen.generateText(20));
 		String textString2 = "You say yes, I say no, "+
 				"You say stop, and I say go, go, go, "+
 				"Oh no. You say goodbye and I say hello, hello, hello, "+
@@ -218,9 +218,9 @@ class ListNode
 	    return null;
 	}
 	
-	public String getFirstNextWord()
+	public String getNextWordAt(int index)
 	{
-	    return nextWords.get(0);
+	    return nextWords.get(index);
 	}
 
 	public String toString()

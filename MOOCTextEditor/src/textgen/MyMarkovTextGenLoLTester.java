@@ -50,9 +50,8 @@ public class MyMarkovTextGenLoLTester {
 	 */
 	@Test
 	public void testTrain() {
-		assertEquals("Check output", "hi: " + "\n" + "there: " + "\n", markovGen.toString());
-		assertEquals("Check output", "hi: " + "\n" + "there: " + "\n" + "Leo: "+ "\n", markovGen2.toString());
-		//assertEquals("Check output", "hi: there->"+"\n"+"there: hi->", markovGen.toString());
+		assertEquals("Check two-word list output", "hi: there->" + "\n" + "there: hi->" + "\n", markovGen.toString());
+		assertEquals("Check longer list output", "hi: there->Leo->" + "\n" + "there: hi->" + "\n" + "Leo: Leo->hi->" + "\n", markovGen2.toString());
 		
 	}
 
