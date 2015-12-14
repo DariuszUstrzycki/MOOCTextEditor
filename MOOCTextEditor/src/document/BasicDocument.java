@@ -14,6 +14,7 @@ public class BasicDocument extends Document
 	 */
 	public BasicDocument(String text)
 	{
+		
 		super(text);
 	}
 	
