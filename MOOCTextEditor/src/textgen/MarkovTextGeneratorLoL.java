@@ -55,7 +55,7 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 				ListNode newNode = new ListNode(word);				
 				wordList.add(newNode);
 				preWordNode.addNextWord(word);
-				preWordNode23 = newNode;
+				preWordNode = newNode;
 				
 			} else {
 				
