@@ -28,8 +28,13 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 * That is, you should convert the string to all lower case as you insert it. */
 	public boolean addWord(String word)
 	{
-	    //TODO: Implement this method.
-	    return false;
+		/*if ((word != null) && (!"".equals(word)) && (!dict.contains(word.toLowerCase()))) {
+			dict.add(word.toLowerCase());
+			return true;
+		} else {
+			return false;
+		}*/
+		return false;
 	}
 	
 	/** 
@@ -39,6 +44,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public int size()
 	{
 	    //TODO: Implement this method
+		//return dict.size();
 	    return 0;
 	}
 	
@@ -48,6 +54,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public boolean isWord(String s) 
 	{
 	    // TODO: Implement this method
+		//return dict.contains(s.toLowerCase());
 		return false;
 	}
 
