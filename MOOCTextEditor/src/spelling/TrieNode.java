@@ -24,8 +24,9 @@ class TrieNode {
 	/** Create a new TrieNode given a text String to store in it */
 	public TrieNode(String text)
 	{
-		this();
+		this(); // do what the default construcotr does but also do the next line
 		this.text = text;
+		// nie powinno tu byc ze isWord = true ?!
 	}
 	
 	/** Return the TrieNode that is the child when you follow the 

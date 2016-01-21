@@ -17,10 +17,10 @@ import java.util.List;
  */
 public class WPTree implements WordPath {
 
-	// this is the root node of the WPTree
-	private WPTreeNode root;
-	// used to search for nearby Words
-	private NearbyWords nw; 
+	
+	private WPTreeNode root; // this is the root node of the WPTree
+	
+	private NearbyWords nw; // used to search for nearby Words
 	
 	// This constructor is used by the Text Editor Application
 	// You'll need to create your own NearbyWords object here.

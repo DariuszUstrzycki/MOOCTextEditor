@@ -1,112 +1,317 @@
 package spelling;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-/** 
- * An trie data structure that implements the Dictionary and the AutoComplete ADT
+/**
+ * An trie data structure that implements the Dictionary and the AutoComplete
+ * ADT
+ * 
  * @author You
  *
  */
-public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
+public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 
-    private TrieNode root;
-    private int size;
-    
+	private TrieNode root;
+	private int size;
 
-    public AutoCompleteDictionaryTrie()
-	{
+	public AutoCompleteDictionaryTrie() {
 		root = new TrieNode();
 	}
-	
-	
-	/** Insert a word into the trie.
-	 * For the basic part of the assignment (part 2), you should ignore the word's case.
-	 * That is, you should convert the string to all lower case as you insert it. */
-	public boolean addWord(String word)
-	{
-		/*if ((word != null) && (!"".equals(word)) && (!dict.contains(word.toLowerCase()))) {
-			dict.add(word.toLowerCase());
-			return true;
-		} else {
-			return false;
-		}*/
-		return false;
-	}
-	
-	/** 
-	 * Return the number of words in the dictionary.  This is NOT necessarily the same
-	 * as the number of TrieNodes in the trie.
+
+	/**
+	 * Insert a word into the trie. For the basic part of the assignment (part
+	 * 2), you should ignore the word's case. That is, you should convert the
+	 * string to all lower case as you insert it.
 	 */
-	public int size()
-	{
-	    //TODO: Implement this method
-		//return dict.size();
-	    return 0;
+	public boolean addWord(String wordToAdd) {
+		// don't add a null or empty string
+		if (wordToAdd == null || "".equals(wordToAdd))
+			return false;
+
+		String word = wordToAdd.toLowerCase();
+		
+		// add the word
+		if(addWordRecursive(root, word, 0)){
+			size++;
+			return true;
+		} else{
+			return false;
+		}
 	}
-	
-	
+
+	/**
+	 * Return the number of words in the dictionary. This is NOT necessarily the
+	 * same as the number of TrieNodes in the trie.
+	 */
+	public int size() {		
+		return size;
+	}
+
 	/** Returns whether the string is a word in the trie */
 	@Override
-	public boolean isWord(String s) 
-	{
-	    // TODO: Implement this method
-		//return dict.contains(s.toLowerCase());
-		return false;
+	public boolean isWord(String s) {
+		// don't check a null or empty string as they're not allowed to be added
+		// to dictionary
+		if ((s == null) || ("".equals(s)))
+			return false;
+		else {			
+			return isWordInDictionary(root, s.toLowerCase(), 0);
+		}
 	}
 
-	/** 
-	 *  * Returns up to the n "best" predictions, including the word itself,
-     * in terms of length
-     * If this string is not in the trie, it returns null.
-     * @param text The text to use at the word stem
-     * @param n The maximum number of predictions desired.
-     * @return A list containing the up to n best predictions
-     */@Override
-     public List<String> predictCompletions(String prefix, int numCompletions) 
-     {
-    	 // TODO: Implement this method
-    	 // This method should implement the following algorithm:
-    	 // 1. Find the stem in the trie.  If the stem does not appear in the trie, return an
-    	 //    empty list
-    	 // 2. Once the stem is found, perform a breadth first search to generate completions
-    	 //    using the following algorithm:
-    	 //    Create a queue (LinkedList) and add the node that completes the stem to the back
-    	 //       of the list.
-    	 //    Create a list of completions to return (initially empty)
-    	 //    While the queue is not empty and you don't have enough completions:
-    	 //       remove the first Node from the queue
-    	 //       If it is a word, add it to the completions list
-    	 //       Add all of its child nodes to the back of the queue
-    	 // Return the list of completions
-    	 
-         return null;
-     }
+	/**
+	 * * Returns up to the n "best" predictions, including the word itself, in
+	 * terms of length If this string is not in the trie, it returns null.
+	 * 
+	 * @param text
+	 *            The text to use at the word stem
+	 * @param n
+	 *            The maximum number of predictions desired.
+	 * @return A list containing the up to n best predictions
+	 */
+	@Override
+	public List<String> predictCompletions(String prefix, int numCompletions) {
+		
+		List<String> listOfCompletions = new LinkedList<>();
+		
+		// don't check a null or empty string as they're not allowed to be added to dictionary
+		if ((prefix == null) || ("".equals(prefix))){
+			for (int i = 0; i < numCompletions; i++) {
+				listOfCompletions.add("");
+			}
+			return listOfCompletions;
+		}
+			
+				
+		String stem = prefix.toLowerCase();
+		// 1. Find the stem in the trie. If the stem does not appear in the
+		// trie, return an empty list		
+		
+		TrieNode nodeForLevelOrderStart = getStartingNode(root, stem, 0);
+				
+		if( nodeForLevelOrderStart == null){
+			return listOfCompletions;
+		}
+		else{
+			// 2. Once the stem is found, perform a breadth first search to generate completions
+			Queue <TrieNode> nodesToVisit = new LinkedList<TrieNode>();
+			nodesToVisit.add(nodeForLevelOrderStart);
+			
+			while(! nodesToVisit.isEmpty() && listOfCompletions.size() < numCompletions){
+				TrieNode curr = nodesToVisit.remove();
+				
+				if(curr != null){
+					
+					// return only valid words
+					if(curr.endsWord())
+						listOfCompletions.add(curr.getText()); // dodaj do List of Completions
+					
+					for(Character letter : curr.getValidNextCharacters()){
+						nodesToVisit.add(curr.getChild(letter));
+					}
+				}			
+			}
+			return listOfCompletions;
+		}
+			
+		
+		// 2. Once the stem is found, perform a breadth first search to generate
+		// completions
+		// using the following algorithm:
+		// Create a queue (LinkedList) and add the node that completes the stem
+		// to the back
+		// of the list.
+		// Create a list of completions to return (initially empty)
+		// While the queue is not empty and you don't have enough completions:
+		// remove the first Node from the queue
+		// If it is a word, add it to the completions list
+		// Add all of its child nodes to the back of the queue
+		// Return the list of completions
 
- 	// For debugging
- 	public void printTree()
- 	{
- 		printNode(root);
- 	}
- 	
- 	/** Do a pre-order traversal from this node down */
- 	public void printNode(TrieNode curr)
- 	{
- 		if (curr == null) 
- 			return;
- 		
- 		System.out.println(curr.getText());
- 		
- 		TrieNode next = null;
- 		for (Character c : curr.getValidNextCharacters()) {
- 			next = curr.getChild(c);
- 			printNode(next);
- 		}
- 	}
- 	
+		
+	}
+
+	// For debugging
+	public void printTree() {
+		printNode(root);
+	}
+
+	/** Do a pre-order traversal from this node down */
+	public void printNode(TrieNode curr) {
+		if (curr == null)
+			return;
+
+		System.out.println(curr.getText());
+
+		TrieNode next = null;
+		for (Character c : curr.getValidNextCharacters()) {
+			next = curr.getChild(c);
+			printNode(next);
+		}
+	}
+
+	private boolean isWordInDictionary(TrieNode node, String word, int letterIndex) {
+		
+		char letterToNextChild = word.charAt(letterIndex);
+		TrieNode childNode = node.getChild(letterToNextChild);
+		
+		//base case 1 >> there's no childNode (and we didn't get to the last letter yet)
+		if (childNode == null) {
+			return false;
+		}			
+		
+		//base case 2 >> there's a childNode and we got to the last letter of the word
+		if (childNode != null && letterIndex == word.length()-1 ) {
+			
+			// check if this childNode is a wordNode or just a "node on the way" to another node
+			if (childNode.endsWord()) {
+				return true; 				
+			} else {
+				return false; 	
+			}
+			
+		}				
+		
+		letterIndex++;
+		// move to next node and letter in this word
+		return isWordInDictionary(childNode, word, letterIndex);
+	} 
 
 	
+
+	private boolean addWordRecursive(TrieNode node, String word, int letterIndex) {
+		
+		char letterToNextChild = word.charAt(letterIndex);
+		TrieNode childNode = node.getChild(letterToNextChild);
+		
+		//base case  >> we got to the last letter 
+		if (letterIndex == word.length()-1) {
+			
+			// check if duplicate
+			if(childNode != null && childNode.endsWord()){
+				return false; // (duplicate > unsuccessful attempt to add)
+			}				
+			else { 
+				
+				if (node.getChild(letterToNextChild) != null)// there is a node
+				{
+					node.getChild(letterToNextChild).setEndsWord(true);//just set it to EndsWord true
+					return true; // successfully added
+				}	
+				else // if there isnt a node, so create the FINAL NODE
+				{
+					TrieNode finalNode = node.insert(letterToNextChild); 
+					finalNode.setEndsWord(true);  
+					return true; // successfully added
+				}	 
+			}
+						
+		}		
+		
+		letterIndex++;
+		
+		if (childNode == null){
+			// create a through node to move on
+			 TrieNode throughNode = node.insert(letterToNextChild);
+			 return addWordRecursive(throughNode, word, letterIndex);
+		}
+		else { 
+			// use the existing node to move on	
+			return addWordRecursive(childNode, word, letterIndex);
+		}
+		
+	}
+	
+	protected TrieNode getRoot(){
+		return root;
+	}
+	//////////////////////////my methods/////////////////////////////
+	public void printTreeWords() {
+		printWordNode(root);
+	}
+
+	/** Do a pre-order traversal from this node down */
+	public void printWordNode(TrieNode curr) {
+		if (curr == null)
+			return;
+		
+		if(curr.endsWord())
+			System.out.println(curr.getText());
+
+		TrieNode next = null;
+		for (Character c : curr.getValidNextCharacters()) {
+			next = curr.getChild(c);
+			printWordNode(next);
+		}
+	}
+	
+	protected void levelOrder(){
+		Queue <TrieNode> q = new LinkedList<TrieNode>();
+		q.add(root);
+		
+		while(! q.isEmpty()){
+			TrieNode curr = q.remove();
+			
+			if(curr != null){
+				
+				visit(curr);
+				
+				for(Character letter : curr.getValidNextCharacters()){
+					q.add(curr.getChild(letter));
+				}
+			}			
+		}
+	}
+	
+	
+	private void visit(TrieNode node){
+		System.out.println(node.getText());
+	}
+	
+	/*protected void levelOrder(TrieNode startNode, Queue<String> list ){
+		Queue <TrieNode> q = list;
+		q.add(startNode);
+		
+		while(! q.isEmpty()){
+			TrieNode curr = q.remove();
+			
+			if(curr != null){
+				
+				visit(curr);
+				
+				for(Character letter : curr.getValidNextCharacters()){
+					q.add(curr.getChild(letter));
+				}
+			}			
+		}
+	}*/
+	
+	private TrieNode getStartingNode(TrieNode node, String stem, int letterIndex){
+		
+		// go to the node with the last character of the stem
+		char letterToNextChild = stem.charAt(letterIndex);
+		TrieNode childNode = node.getChild(letterToNextChild);
+		
+		//base case 1 >> there's no childNode (and we didn't get to the last letter yet)
+		if (childNode == null) {
+			return null;
+		}			
+		
+		//base case 2 >> there's a childNode and we got to the last letter of the word
+		if (childNode != null && letterIndex == stem.length()-1 ) {						
+			return childNode; 
+		}				
+		
+		letterIndex++;
+		// move to next node and letter in this word
+		return getStartingNode(childNode, stem, letterIndex);
+		
+		
+	}
+
 }
