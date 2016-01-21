@@ -16,9 +16,9 @@ import java.util.Queue;
  *
  */
 public class NearbyWords implements SpellingSuggest {
+	
 	// THRESHOLD to determine how many words to look through when looking
 	// for spelling suggestions (stops prohibitively long searching)
-	// For use in the Optional Optimization in Part 2.
 	private static final int THRESHOLD = 50000; 
 
 	Dictionary dict;
@@ -132,8 +132,8 @@ public class NearbyWords implements SpellingSuggest {
 				}	
 	}
 
-	/** Add to the currentList Strings that are one character deletion away
-	 * from the input string.  
+	/** Add to the suggestions list Strings that are one character deletion away
+	 * from the input string and are real words.  
 	 * @param word The misspelled word
 	 * @param numSuggestions is the maximum number of suggestions to return 
 	 * @return the list of spelling suggestions
@@ -180,7 +180,7 @@ public class NearbyWords implements SpellingSuggest {
 
    public static void main(String[] args) {
 	   // basic testing code to get started
-	   String word = "kangaro";
+	   String word = "a";
 	   // Pass NearbyWords any Dictionary implementation you prefer
 	   Dictionary d = new DictionaryHashSet();
 	   DictionaryLoader.loadDictionary(d, "data/dict.txt");
