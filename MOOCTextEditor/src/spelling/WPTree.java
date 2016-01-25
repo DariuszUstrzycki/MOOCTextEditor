@@ -87,6 +87,7 @@ public class WPTree implements WordPath {
 	}
 	
 	// Method to print a list of WPTreeNodes (useful for debugging)
+	@SuppressWarnings("unused")
 	private String printQueue(List<WPTreeNode> list) {
 		String ret = "[ ";
 		
