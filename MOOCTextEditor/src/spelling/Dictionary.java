@@ -8,6 +8,8 @@ package spelling;
  *
  */
 public interface Dictionary {
+	
+	
 	/** Add this word to the dictionary.
 	 * @param word The word to add
 	 * @return true if the word was added to the dictionary 

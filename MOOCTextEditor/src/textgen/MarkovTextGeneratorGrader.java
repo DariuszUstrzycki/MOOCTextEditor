@@ -22,6 +22,7 @@ public class MarkovTextGeneratorGrader {
             } catch (Exception e) {
                 feedback += "Error thrown. ";
             }
+ 
 
             gen.train("");
             feedback += "\n** Test 2: Generating text after training on an empty file...";
@@ -31,6 +32,7 @@ public class MarkovTextGeneratorGrader {
             } catch (Exception e) {
                 feedback += "Error thrown. ";
             }
+ 
 
             String input = "I love cats. I hate dogs. I I I I I I I I I I I I I I I I love cats. I I I I I I I I I I I I I I I I hate dogs. I I I I I I I I I like books. I love love. I am a text generator. I love cats. I love cats. I love cats. I love love love socks.";
             gen.retrain(input);
@@ -52,7 +54,7 @@ public class MarkovTextGeneratorGrader {
                     wordCounts.put(w, 1);
                 }
             }
-
+ 
             feedback += "\n** Test #4: Testing specific word counts...";
             feedback += "'I' appeared " + wordCounts.get("I") + " times. ";
 
@@ -77,15 +79,19 @@ public class MarkovTextGeneratorGrader {
                     i++;
                 }
             }
-
+ 
             feedback += "The word 'I' appears " + i + " times. ";
-
-            gen.retrain("");
+ 
+            gen.retrain(""); 
             feedback += "\n** Test #9: Testing retrain()...";
-            String s = gen.generateText(20);
+            System.out.println("Part sadsa  " + feedback);
+            
+			String s = gen.generateText(20);
+
             feedback += "Text generated: " + s + ". ";
 
             feedback += "\nTests complete. Make sure everything looks right.";
+
 
             PrintWriter f = new PrintWriter("grader_output/module3.part2.out");
             f.println(feedback);
