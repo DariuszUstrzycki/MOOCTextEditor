@@ -9,10 +9,7 @@ import java.util.LinkedList;
 
 /**
  * An trie data structure that implements the Dictionary and the AutoComplete
- * ADT
- * 
- * @author You
- *
+
  */
 public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 
@@ -24,9 +21,7 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 	}
 
 	/**
-	 * Insert a word into the trie. For the basic part of the assignment (part
-	 * 2), you should ignore the word's case. That is, you should convert the
-	 * string to all lower case as you insert it.
+	 * Insert a word into the trie. 
 	 */
 	public boolean addWord(String wordToAdd) {
 		// don't add a null or empty string
@@ -89,7 +84,7 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 			
 				
 		String stem = prefix.toLowerCase();
-		// 1. Find the stem in the trie. If the stem does not appear in the
+		// Find the stem in the trie. If the stem does not appear in the
 		// trie, return an empty list		
 		
 		TrieNode nodeForLevelOrderStart = getStartingNode(root, stem, 0);
@@ -98,7 +93,7 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 			return listOfCompletions;
 		}
 		else{
-			// 2. Once the stem is found, perform a breadth first search to generate completions
+		//Once the stem is found, perform a breadth first search to generate completions
 			Queue <TrieNode> nodesToVisit = new LinkedList<TrieNode>();
 			nodesToVisit.add(nodeForLevelOrderStart);
 			
@@ -117,22 +112,7 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 				}			
 			}
 			return listOfCompletions;
-		}
-			
-		
-		// 2. Once the stem is found, perform a breadth first search to generate
-		// completions
-		// using the following algorithm:
-		// Create a queue (LinkedList) and add the node that completes the stem
-		// to the back
-		// of the list.
-		// Create a list of completions to return (initially empty)
-		// While the queue is not empty and you don't have enough completions:
-		// remove the first Node from the queue
-		// If it is a word, add it to the completions list
-		// Add all of its child nodes to the back of the queue
-		// Return the list of completions
-
+		}		
 		
 	}
 
@@ -250,46 +230,6 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 		}
 	}
 	
-	protected void levelOrder(){
-		Queue <TrieNode> q = new LinkedList<TrieNode>();
-		q.add(root);
-		
-		while(! q.isEmpty()){
-			TrieNode curr = q.remove();
-			
-			if(curr != null){
-				
-				visit(curr);
-				
-				for(Character letter : curr.getValidNextCharacters()){
-					q.add(curr.getChild(letter));
-				}
-			}			
-		}
-	}
-	
-	
-	private void visit(TrieNode node){
-		System.out.println(node.getText());
-	}
-	
-	/*protected void levelOrder(TrieNode startNode, Queue<String> list ){
-		Queue <TrieNode> q = list;
-		q.add(startNode);
-		
-		while(! q.isEmpty()){
-			TrieNode curr = q.remove();
-			
-			if(curr != null){
-				
-				visit(curr);
-				
-				for(Character letter : curr.getValidNextCharacters()){
-					q.add(curr.getChild(letter));
-				}
-			}			
-		}
-	}*/
 	
 	private TrieNode getStartingNode(TrieNode node, String stem, int letterIndex){
 		
@@ -310,8 +250,5 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 		letterIndex++;
 		// move to next node and letter in this word
 		return getStartingNode(childNode, stem, letterIndex);
-		
-		
 	}
-
 }

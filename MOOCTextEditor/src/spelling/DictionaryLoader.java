@@ -7,7 +7,6 @@ import java.io.IOException;
 public class DictionaryLoader {
 
     /** Load the words from the dictionary file into the dictionary
-     * 
      * @param d  The dictionary to load
      * @param filename The file containing the words to load.  Each word must be on a separate line.
      */    
@@ -25,20 +24,17 @@ public class DictionaryLoader {
             System.err.println("Problem loading dictionary file: " + filename);
             e.printStackTrace();
         }
-        
     }
     
     /** Load the first N words from the dictionary file into the dictionary
-     * 
      * @param d  The dictionary to load
      * @param filename The file containing the words to load.  Each word must be on a separate line.
      * @param nWords  The number of words to load.  It will load the first nWords words
      */
     public static void loadDictionary(Dictionary d, String filename, int nWords)
-    {
-        // Dictionary files have 1 word per line
+    {        
         BufferedReader reader = null;
-        try {
+        try {             				 // Dictionary files have 1 word per line
             String nextWord;
             reader = new BufferedReader(new FileReader(filename));
             int numLoaded = 0;
@@ -54,6 +50,5 @@ public class DictionaryLoader {
             System.err.println("Problem loading dictionary file: " + filename);
             e.printStackTrace();
         }    	
-    	
     }
 }

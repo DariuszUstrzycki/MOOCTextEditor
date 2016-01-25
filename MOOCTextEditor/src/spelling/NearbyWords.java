@@ -38,9 +38,9 @@ public class NearbyWords implements SpellingSuggest {
 		  		
 		List<String> retList = new ArrayList<String>();
 		
-		  insertions(s, retList, wordsOnly);
-		  subsitution(s, retList, wordsOnly);
-		  deletions(s, retList, wordsOnly);
+		 subsitution(s, retList, wordsOnly);
+		 insertions(s, retList, wordsOnly);		 
+		 deletions(s, retList, wordsOnly);
 		   
 		return retList;
 	}
@@ -172,18 +172,18 @@ public class NearbyWords implements SpellingSuggest {
 			}
 			
 		}
-			System.out.println("Size of suggestions list: " + suggestions.size() + "  int numSuggestions: " + numSuggestions);
 		
 		return numSuggestions > suggestions.size() ? suggestions.subList(0, suggestions.size()) : suggestions.subList(0, numSuggestions);
 
 	}	
-
+	// for testing
    public static void main(String[] args) {
 	   // basic testing code to get started
-	   String word = "a";
+	   String word = "kura";
 	   // Pass NearbyWords any Dictionary implementation you prefer
 	   Dictionary d = new DictionaryHashSet();
-	   DictionaryLoader.loadDictionary(d, "data/dict.txt");
+	   //DictionaryLoader.loadDictionary(d, "data/dict.txt");
+	   DictionaryLoader.loadDictionary(d, "data/Polish_dictionary.dic");
 	   
 	   NearbyWords w = new NearbyWords(d);
 	   // generate words 1 step away from the given word (if "true" only words in the dictionary
@@ -192,13 +192,10 @@ public class NearbyWords implements SpellingSuggest {
 	   System.out.println("One away word Strings for  \""+word+"\" are:");
 	   System.out.println(listOf_1_Aways+"\n");
 
-	   //word = "sxrt";
+	   word = "smoj";
 	   List<String> suggest = w.suggestions(word, 10); // asking for a list of 10 suggestions for word
 	   System.out.println("Spelling Suggestions for \""+word+"\" are:");
 	   System.out.println(suggest);
-	   
-	   
-	   
    }
 
 }

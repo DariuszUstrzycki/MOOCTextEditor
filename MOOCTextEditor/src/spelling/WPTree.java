@@ -7,6 +7,7 @@ package spelling;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * WPTree implements WordPath by dynamically creating a tree of words during a Breadth First
@@ -16,20 +17,17 @@ import java.util.List;
  *
  */
 public class WPTree implements WordPath {
-
 	
-	private WPTreeNode root; // this is the root node of the WPTree
-	
+	private WPTreeNode root; // this is the root node of the WPTree	
 	private NearbyWords nw; // used to search for nearby Words
 	
 	// This constructor is used by the Text Editor Application
 	// You'll need to create your own NearbyWords object here.
 	public WPTree () {
 		this.root = null;
-		// TODO initialize a NearbyWords object
-		Dictionary d = new DictionaryHashSet();
-		DictionaryLoader.loadDictionary(d, "data/dict.txt");
-		this.nw = new NearbyWords(d);
+		Dictionary dict = new DictionaryHashSet();
+		DictionaryLoader.loadDictionary(dict, "data/dict.txt");
+		this.nw = new NearbyWords(dict);
 	}
 	
 	//This constructor will be used by the grader code
@@ -41,8 +39,51 @@ public class WPTree implements WordPath {
 	// see method description in WordPath interface
 	public List<String> findPath(String word1, String word2) 
 	{
-	    // TODO: Implement this method.
-	    return new LinkedList<String>();
+		String startWord = word1.toLowerCase();
+		String targetWord = word2.toLowerCase();
+		
+		// If the user gives you a targetWord which isn't a word in the dictionary, no path will exist,
+		// as you'll never find targetWord as a dictionary (real) word when calling the distanceOne method.
+		
+		if( !nw.dict.isWord(targetWord) )
+			return null;
+				
+		Queue<WPTreeNode> queue = new LinkedList<WPTreeNode>();     // WPTreeNodes to explore
+		HashSet<String> setOfvisited = new HashSet<String>();   // to avoid exploring the same string multiple times
+		
+		// Set the root to be a WPTreeNode containing startWord
+		root = new WPTreeNode(startWord, null);
+				
+		setOfvisited.add(startWord);								
+		queue.add(root);		
+		
+		// while the queue has elements and we have not yet found targetWord
+		while( !queue.isEmpty()){
+			
+			WPTreeNode curr =  queue.remove();
+			
+			// get a list of real word neighbors (one mutation from curr's word)
+			List<String> oneWordAwayList = nw.distanceOne(curr.getWord(), true);
+			
+			for (String neighbourWord : oneWordAwayList) {
+				
+				if(!setOfvisited.contains(neighbourWord)){
+					
+					WPTreeNode childNode = curr.addChild(neighbourWord); //add neighbourWord as a child of curr 
+					setOfvisited.add(neighbourWord); //add neighbourWord to the visited set
+					queue.add(childNode); //add the child node for neighbourWord to the back of the queue
+					
+					//if n is word2 no path will exist
+					         
+					if(neighbourWord.equals(targetWord)){						
+						return childNode.buildPathToRoot();
+					}
+				}				
+			} 
+		}//end while
+		
+		return null;
+	    
 	}
 	
 	// Method to print a list of WPTreeNodes (useful for debugging)
@@ -108,6 +149,7 @@ class WPTreeNode {
     public List<String> buildPathToRoot() {
         WPTreeNode curr = this;
         List<String> path = new LinkedList<String>();
+       
         while(curr != null) {
             path.add(0,curr.getWord());
             curr = curr.parent; 
@@ -129,17 +171,22 @@ class WPTreeNode {
 	 */
     public String toString() {
         String ret = "Word: "+word+", parent = ";
+        
         if(this.parent == null) {
            ret+="null.\n";
         }
         else {
            ret += this.parent.getWord()+"\n";
         }
+        
         ret+="[ ";
+        
         for(WPTreeNode curr: children) {
             ret+=curr.getWord() + ", ";
         }
+         
         ret+=(" ]\n");
+        
         return ret;
     }
 
